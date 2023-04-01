@@ -1,0 +1,19 @@
+{
+    "files.associations": {
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "xstring": "cpp",
+        "istream": "cpp",
+        "iostream": "cpp",
+        "unordered_set": "cpp",
+        "xutility": "cpp",
+        "algorithm": "cpp",
+        "memory": "cpp",
+        "queue": "cpp",
+        "utility": "cpp",
+        "fstream": "cpp",
+        "iosfwd": "cpp",
+        "string": "cpp",
+        "ostream": "cpp"
+    }
+}
