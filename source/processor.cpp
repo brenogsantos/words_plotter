@@ -360,7 +360,7 @@ void Words::saveToTxtWordsMap()
 {
     
 // Open the file for writing
-    std::ofstream outfile("output_test.txt");
+    std::ofstream outfile("output.txt");
     std::string lines {""};
     int count {1};
     int count_lines_printed {0};

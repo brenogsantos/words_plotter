@@ -1,0 +1,16 @@
+314	1	atos.txt
+377	2	john.txt
+414	3	lucas.txt
+378	4	matheus.txt
+23	1	atos.txt
+36	2	john.txt
+68	3	lucas.txt
+40	4	matheus.txt
+74	1	atos.txt
+290	2	john.txt
+209	3	lucas.txt
+170	4	matheus.txt
+177	1	atos.txt
+82	2	john.txt
+124	3	lucas.txt
+55	4	matheus.txt
