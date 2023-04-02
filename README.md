@@ -28,8 +28,8 @@ The gnuplot reads the output.txt file.
 
 # Bugs to Fix
 
-- [ ] If the file does not contain the word, the "output.txt" is written in an unplanned way (the lines related to each word are out of order) and the Plot output is wrong
-- [ ] ...
+- [x] ~~If the file does not contain the word, the "output.txt" is written in an unplanned way (the lines related to each word are out of order) and the Plot output is wrong~~
+- [ ] The lines are in order, but if the last line (of the group related to one word) is a line which refers to a file that didn't have any repetitiveness of the word, the program crashes.
 
 
 # Resources
