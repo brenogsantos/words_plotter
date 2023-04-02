@@ -58,20 +58,19 @@ void loopInputSeekWords(Words& w)
 
     std::cout << "Enter the words, separated by space: ";
     
-    //std::vector<std::string> seek_words; // Vector to store the input strings
-    std::string line; // String to store the input line
 
-    std::getline(std::cin, line); // Read the entire line of input
+    std::string line; 
 
-    // Use an istringstream to read space-separated strings from the input line
+    std::getline(std::cin, line); 
+
+
     std::istringstream iss(line);
     std::string word;
     while (iss >> word) {
-        w.seek_words.push_back(word); // Add each word to the vector
+        w.seek_words.push_back(word);
 
     }
 
-    // Print the contents of the vector
     std::cout << "You entered " << w.seek_words.size() << " words:" << std::endl;
     for (const auto& w : w.seek_words) {
         std::cout << w << std::endl;
@@ -187,7 +186,6 @@ void Words::readTopWordsFromFile(const int index, int num_topWords)
         std::cout << "Top " << num_topWords << " most frequent words:" << "\n";
 
         std::unique_ptr<std::priority_queue<std::pair<int, std::string>>> temp(new std::priority_queue<std::pair<int, std::string>>(top_words));
-            // print the top 5 elements
         int count = 0;
         while (!temp->empty() && count < num_topWords) {
             std::cout << temp->top().second << " (" << temp->top().first << " occurrences)" << "\n";
@@ -204,99 +202,95 @@ void Words::readTopWordsFromFile(const int index, int num_topWords)
 
 }
 
-/*int Words::getLastVecPosition() {
-    return filenames.size() - 1;
-}*/
+
 
 void Words::plotData()
 {
     FILE* gnuplot = popen("gnuplot", "w");
     fprintf(gnuplot, "set grid lw 2\n");
-    /*fprintf(gnuplot, "plot \"data.dat\" using 1:2 title 'Column' with lines, \
-                      \"data.dat\" using 1:3 title 'Beam' with lines\n");
-    */
-   fprintf(gnuplot, "set xlabel 'String'\n");
-   fprintf(gnuplot, "set ylabel 'Repetitions'\n");
-   fprintf(gnuplot, "set style data lines\n");
 
-    int i = 0;
-    std::string str_xAxis = "set xtics (";
+    fprintf(gnuplot, "set xlabel 'String'\n");
+    fprintf(gnuplot, "set ylabel 'Repetitions'\n");
+    fprintf(gnuplot, "set style data lines\n");
 
-    while(i < filenames.size())
-    {
+        int i = 0;
+        std::string str_xAxis = "set xtics (";
 
-        str_xAxis += "'";
-        str_xAxis += filenames[i];
-        if(i == filenames.size()) "' " + std::to_string(i+1);
-        else str_xAxis += "' " + std::to_string(i+1) + ", ";
-        
-        i++;
-    }
-    str_xAxis += ")\n";
-    
-   //fprintf(gnuplot, "set xtics ('1st' 1, '2nd' 2, '3rd' 3)\n");
-   fprintf(gnuplot, str_xAxis.c_str());
-
-   std::string str_xAxis_size = "set for [i=1:";
-
-   str_xAxis_size += std::to_string(filenames.size());
-   str_xAxis_size += "] xtics add (i 1)\n";
-   fprintf(gnuplot, str_xAxis_size.c_str());
-   //fprintf(gnuplot, "set for [i=1:4] xtics add (i 1)\n");
-
-
-
-   fprintf(gnuplot, "set xtics scale 0,1\n");
-
-   std::string str_xAxis_range = "set xrange [1:";
-   str_xAxis_range += std::to_string(filenames.size());
-   str_xAxis_range +=  "]\n";
-   fprintf(gnuplot, str_xAxis_range.c_str());
-  // fprintf(gnuplot, "set xrange [1:3]\n");
-   
-   
-   int base {filenames.size() - 1};
-   std::string str1 = "plot 'output.txt' every ::0::" + std::to_string((base)) +  " using 2:1 title ";
-   std::string test1 =  "'" + std::string(seek_words[0]) + "'" + ", \ ";
-   //std::string str1 = "plot 'output.txt' every ::0::2 using 2:1 title ";
-
-   int count {0};
-   std::string str_rest {};
-   base++;
-   while(count < seek_words.size())
-   {    
-        std::cout << "aaaasds "<< "::" << base << "::" << base + filenames.size() -1 << "\n";
-        str_rest += "'output.txt' every ::" + std::to_string(base) + "::" + std::to_string((base) + filenames.size() -1 )
-         +  " using 2:1 title ";
-        if(count == (seek_words.size() - 1))
+        while(i < filenames.size())
         {
-            str_rest +=  "'" + seek_words.back() + "'" + "\n";
-             
-        } 
-        else 
-        {
-                str_rest +=  "'" + seek_words[count+1] + "'" + ", \ ";
+
+            str_xAxis += "'";
+            str_xAxis += filenames[i];
+            if(i == filenames.size()) "' " + std::to_string(i+1);
+            else str_xAxis += "' " + std::to_string(i+1) + ", ";
+            
+            i++;
         }
-
-        base += (filenames.size());
-        count++;
+        str_xAxis += ")\n";
         
-   }
+    //fprintf(gnuplot, "set xtics ('1st' 1, '2nd' 2, '3rd' 3)\n");
+    fprintf(gnuplot, str_xAxis.c_str());
 
-   std::string result = str1 + test1 + str_rest;
+    std::string str_xAxis_size = "set for [i=1:";
 
-   fprintf(gnuplot, result.c_str());
+    str_xAxis_size += std::to_string(filenames.size());
+    str_xAxis_size += "] xtics add (i 1)\n";
+    fprintf(gnuplot, str_xAxis_size.c_str());
+    //fprintf(gnuplot, "set for [i=1:4] xtics add (i 1)\n");
 
+
+
+    fprintf(gnuplot, "set xtics scale 0,1\n");
+
+    std::string str_xAxis_range = "set xrange [1:";
+    str_xAxis_range += std::to_string(filenames.size());
+    str_xAxis_range +=  "]\n";
+    fprintf(gnuplot, str_xAxis_range.c_str());
+    // fprintf(gnuplot, "set xrange [1:3]\n");
     
     
-    
+    int base {filenames.size() - 1};
+    std::string str1 = "plot 'output.txt' every ::0::" + std::to_string((base)) +  " using 2:1 title ";
+    std::string test1 =  "'" + std::string(seek_words[0]) + "'" + ", \ ";
+    //std::string str1 = "plot 'output.txt' every ::0::2 using 2:1 title ";
+
+    int count {0};
+    std::string str_rest {};
+    base++;
+    while(count < seek_words.size())
+    {    
+            std::cout << "aaaasds "<< "::" << base << "::" << base + filenames.size() -1 << "\n";
+            str_rest += "'output.txt' every ::" + std::to_string(base) + "::" + std::to_string((base) + filenames.size() -1 )
+            +  " using 2:1 title ";
+            if(count == (seek_words.size() - 1))
+            {
+                str_rest +=  "'" + seek_words.back() + "'" + "\n";
+                
+            } 
+            else 
+            {
+                    str_rest +=  "'" + seek_words[count+1] + "'" + ", \ ";
+            }
+
+            base += (filenames.size());
+            count++;
+            
+    }
+
+    std::string result = str1 + test1 + str_rest;
+
+    fprintf(gnuplot, result.c_str());
+
+        
+        
+        
     fflush(gnuplot);
 
-    // Wait for Gnuplot to complete
+        // Wait for Gnuplot to complete
     std::this_thread::sleep_for(std::chrono::seconds(10));
 
-    // Close the pipe
-    //pclose(gnuplot);
+        // Close the pipe
+        //pclose(gnuplot);
 
 }
 
@@ -308,7 +302,7 @@ void Words::logSeekWordsQty(const int index_File)
     std::unique_ptr<std::priority_queue<std::pair<int, std::string>>> temp(new std::priority_queue<std::pair<int, std::string>>(top_words));
 
    // std::cout << "aaaasds "<< temp->top().second << "\n";
-   std::vector<std::string> not_present_str {};
+    std::vector<std::string> not_present_str {};
     while (!temp->empty()) {
         //not_present_str.clear();
         for(auto &str : seek_words)
@@ -348,11 +342,61 @@ void Words::printWordsMap()
     for (const auto& pair : words_totalMap) {
         std::cout << pair.first << "\t";
         for (const auto& p : pair.second) {
-            std::cout << p.first << "   " << p.second << "\t\t";
+            std::cout << p.first << "   " << p.second << "\t";
         }
         std::cout << std::endl;
     }
 
+
+}
+
+std::string Words::getIndexNumOnTxt(const std::string& filename)
+{
+
+    auto it = std::find(filenames.begin(), filenames.end(), filename);
+    auto pos = std::distance(filenames.begin(), it) + 1;
+    if (it != filenames.end()) {
+     //   std::cout << "Found at position " << std::distance(filenames.begin(), it) << "\n";
+    } else {
+      //  std::cout << "Not found" << "\n";
+    }
+    return std::to_string(pos);
+
+
+}
+
+std::vector<std::string> Words::fixLinesNumsOnTxt(std::vector<std::string>& lines)
+{
+    int line_counter {1};
+    std::string sub {0};
+    lines.resize(filenames.size());
+
+    for(auto line : lines)
+    {
+
+        std::cout << "LINHAS: " << lines.size() << "  linha:  "  << line << "\n";
+
+
+        sub = line.substr(line.find('\t')+1);
+        sub = sub.substr(0, sub.find('\t'));
+
+        if(std::stoi(sub) > line_counter)
+        {
+            std::cout << "Sub eh maior  " << sub << "\t" << "line counter:  " << line_counter << "\n";
+            lines.insert(lines.begin() + (line_counter - 1), "0\t"+std::to_string(line_counter)+"\t"+filenames[line_counter-1]+"\n");
+            line_counter++;
+        }
+
+        else
+        {
+            std::cout << "sub eh igual  " << sub << "\t" << "line counter:  " << line_counter << "\n";
+            line_counter++;
+        }
+
+
+    }
+
+    return lines;
 
 }
 
@@ -361,7 +405,7 @@ void Words::saveToTxtWordsMap()
     
 // Open the file for writing
     std::ofstream outfile("output.txt");
-    std::string lines {""};
+    std::vector<std::string> lines {""};
     int count {1};
     int count_lines_printed {0};
     int flag_buffer_complete {0};
@@ -374,22 +418,31 @@ void Words::saveToTxtWordsMap()
         count = 1;
         for (auto const& pair : value) {
             //lines += std::to_string(pair.first) + "\t" +  std::to_string(count) + '\t' + pair.second + '\n';
-            outfile << pair.first << '\t'<< count << '\t' << pair.second << '\n';
+            //outfile << pair.first << '\t'<< count << '\t' << pair.second << '\n';
+            lines.push_back(std::to_string(pair.first) + "\t" +  getIndexNumOnTxt(pair.second) + '\t' + pair.second + '\n');
             count++;
         }
-        while(count < (filenames.size() + 1))
+        /*while(count < (filenames.size() + 1))
         {
            // lines += std::to_string(0) + "\t" +  std::to_string(count) + '\t' + "" + '\n';
             outfile << 0 << '\t'<< count << '\t' << "" << '\n';
             count++;
             flag_buffer_complete = 1;
-        }
-
-        if(flag_buffer_complete)
+        }*/
+      //  std::cout << "count  " << count << "  filenames:  " << filenames.size() << "\n";
+        if (count < (filenames.size() + 1))
         {
+            lines = fixLinesNumsOnTxt(lines);
+            for(auto & line: lines)
+            outfile << line;
 
+            
         }
-
+        else
+        {
+            for(auto & line: lines)
+            outfile << line;
+        }
 
     }
 

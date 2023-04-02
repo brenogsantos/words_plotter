@@ -45,6 +45,8 @@ private:
     std::priority_queue<std::pair<int, std::string>> top_words; //temporary data, criar um banco pra eles
     std::unordered_map<std::string, std::vector<std::pair<int,std::string>>> words_totalMap;
 
+    std::string getIndexNumOnTxt(const std::string&);
+    std::vector<std::string> fixLinesNumsOnTxt(std::vector<std::string>&);
     
 public:
     Words(/* args */);
